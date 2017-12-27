@@ -3,10 +3,10 @@ Android library to set touch range of the view
 ### Feature
 - Set the view touch bounds
 
-###Installation
+### Installation
 Add this to your module `build.gradle` file:
 
-###How to use?
+### How to use?
 ```
 TouchRange.let(mBtn)
                 // easy to use, like css padding
