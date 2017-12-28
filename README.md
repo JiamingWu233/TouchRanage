@@ -6,6 +6,20 @@ Android library to set touch range of the view
 ### Installation
 Add this to your module `build.gradle` file:
 
+    dependencies {
+		    ...
+    		compile 'com.github.JiamingWu233:TouchRange:1.0.0-beta'
+    }
+
+Add this to your root `build.gradle` file (not your module `build.gradle` file) :
+
+    allprojects {
+    		repositories {
+    			...
+    			maven { url 'https://jitpack.io' }
+    		}
+    }
+
 ### How to use?
 ```
 TouchRange.let(mBtn)
