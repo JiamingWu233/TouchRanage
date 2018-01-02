@@ -2,6 +2,7 @@
 Android library to set touch range of the view
 ### Feature
 - Set the view touch bounds
+- Support multiple view
 
 ### Installation
 Add this to your module `build.gradle` file:
@@ -22,7 +23,7 @@ Add this to your root `build.gradle` file (not your module `build.gradle` file) 
 
 ### How to use?
 ```
-TouchRange.let(mBtn)
+TouchRange.let(mBtn...)
                 // easy to use, like css padding
                 .bounds()//default value is 14dp
 //                .bounds(24.0f) //left,top,right,bottom=24dp

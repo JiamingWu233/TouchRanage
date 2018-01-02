@@ -13,46 +13,62 @@ public class TouchRange {
 
     private static final float DEFAULT_BOUNDS = 14.0f;
 
-    private Builder builder;
+    private Builder mBuilder;
+    private TouchDelegateGroup mTouchDelegateGroup;
 
     private TouchRange(Builder builder) {
-        this.builder = builder;
+        this.mBuilder = builder;
     }
 
     public void change() {
-        View parent = (View) this.builder.view.getParent();
-        parent.post(new Runnable() {
-            @Override
-            public void run() {
-                Rect rect = new Rect();
-                TouchRange.this.builder.view.setEnabled(true);
-                TouchRange.this.builder.view.getHitRect(rect);
-
-                rect.left -= TouchRange.this.builder.bounds[0];
-                rect.top -= TouchRange.this.builder.bounds[1];
-                rect.right += TouchRange.this.builder.bounds[2];
-                rect.bottom += TouchRange.this.builder.bounds[3];
-
-                TouchDelegate touchDelegate = new TouchDelegate(rect, TouchRange.this.builder.view);
-
-                if (View.class.isInstance(TouchRange.this.builder.view.getParent())) {
-                    ((View) TouchRange.this.builder.view.getParent()).setTouchDelegate(touchDelegate);
-                }
+        View[] views = mBuilder.views;
+        if (views == null) {
+            return;
+        }
+        for (final View view : views) {
+            final View parent = (View) view.getParent();
+            if (mTouchDelegateGroup == null) {
+                mTouchDelegateGroup = new TouchDelegateGroup(parent);
             }
-        });
+            parent.post(new Runnable() {
+                @Override
+                public void run() {
+                    Rect rect = new Rect();
+                    view.setEnabled(true);
+                    view.getHitRect(rect);
+
+                    rect.left -= TouchRange.this.mBuilder.bounds[0];
+                    rect.top -= TouchRange.this.mBuilder.bounds[1];
+                    rect.right += TouchRange.this.mBuilder.bounds[2];
+                    rect.bottom += TouchRange.this.mBuilder.bounds[3];
+
+                    TouchDelegate touchDelegate = new TouchDelegate(rect, view);
+                    if (View.class.isInstance(view.getParent())) {
+                        mTouchDelegateGroup.addTouchDelegate(touchDelegate);
+                    }
+                }
+            });
+            parent.setTouchDelegate(mTouchDelegateGroup);
+        }
+
     }
 
-    public static Builder let(View v) {
+    /**
+     * Set the view
+     * @param v You need to set the touch-size view
+     * @return {@link Builder}
+     */
+    public static Builder let(View... v) {
         return new Builder(v);
     }
 
     public static class Builder {
 
-        private View view;
+        private View[] views;
         private int[] bounds;
 
-        Builder(View view) {
-            this.view = view;
+        Builder(View[] views) {
+            this.views = views;
         }
 
         /**
@@ -60,7 +76,7 @@ public class TouchRange {
          *
          * @param bounds Touch bounds value(left,top,right,bottom),the value unit is dp.
          *               If you do not set the bounds value, the default value is 20dp.
-         * @return {@link #TouchRange}
+         * @return {@link TouchRange}
          */
         public TouchRange bounds(float... bounds) {
             if (bounds.length == 0) {
