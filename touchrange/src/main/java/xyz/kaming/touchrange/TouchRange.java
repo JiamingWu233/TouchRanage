@@ -55,6 +55,7 @@ public class TouchRange {
 
     /**
      * Set the view
+     *
      * @param v You need to set the touch-size view
      * @return {@link Builder}
      */

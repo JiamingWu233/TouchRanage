@@ -19,7 +19,7 @@ import xyz.kaming.touchrange.TouchRange;
  */
 public class SampleAdapter extends RecyclerView.Adapter<SampleAdapter.SampleHolder> {
 
-    private static final int DEFAULT_LENGTH = 10;
+    private static final int DEFAULT_LENGTH = 14;
     private Context mContext;
     private LayoutInflater mLayoutInflater;
 

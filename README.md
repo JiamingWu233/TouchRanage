@@ -9,7 +9,7 @@ Add this to your module `build.gradle` file:
 
     dependencies {
 	    ...
-        compile 'com.github.JiamingWu233:TouchRange:1.0.0-beta'
+        compile 'com.github.JiamingWu233:TouchRange:1.0.0'
     }
 
 Add this to your root `build.gradle` file (not your module `build.gradle` file) :
